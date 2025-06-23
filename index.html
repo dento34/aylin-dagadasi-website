@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Hukuk Bürosu</title>
+    
+    <!-- Decap CMS -->
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+    
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Custom Admin Styling -->
+    <style>
+        :root {
+            --primary: #0f3460;
+            --primary-light: #1e4a73;
+            --primary-dark: #0a2847;
+        }
+        
+        /* CMS Ana Container */
+        .css-1hx5nyq {
+            font-family: 'Poppins', sans-serif !important;
+        }
+        
+        /* Header - Üst Bar */
+        .css-1a3k2bk, .css-7pqlyh {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%) !important;
+            border: none !important;
+        }
+        
+        /* Sol Sidebar */
+        .css-1d1r5rk, .css-1mn3n8k {
+            background-color: #f8fafc !important;
+            border-right: 1px solid #e2e8f0 !important;
+        }
+        
+        /* Ana İçerik Alanı */
+        .css-1s74nv5 {
+            background-color: #ffffff !important;
+        }
+        
+        /* Butonlar */
+        .css-pxq3oz, .css-1nvp19s, .css-11aywtz {
+            background: var(--primary) !important;
+            border-color: var(--primary) !important;
+            border-radius: 8px !important;
+            font-weight: 500 !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .css-pxq3oz:hover, .css-1nvp19s:hover, .css-11aywtz:hover {
+            background: var(--primary-light) !important;
+            border-color: var(--primary-light) !important;
+            transform: translateY(-1px) !important;
+        }
+        
+        /* Kartlar */
+        .css-1hwfws3, .css-1v5pqgu {
+            border-radius: 12px !important;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+        
+        /* Form Elemanları */
+        .css-1wa3eu0, .css-1hwfws3 input, .css-1hwfws3 textarea, .css-1hwfws3 select {
+            border-radius: 8px !important;
+            border: 1px solid #d1d5db !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .css-1wa3eu0:focus, .css-1hwfws3 input:focus, .css-1hwfws3 textarea:focus {
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 3px rgba(15, 52, 96, 0.1) !important;
+            outline: none !important;
+        }
+        
+        /* Navigation Links */
+        .css-vurnku, .css-vurnku a {
+            color: var(--primary) !important;
+            font-weight: 500 !important;
+        }
+        
+        /* Collection Kartları */
+        .css-1aq4p6s {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%) !important;
+            border: 1px solid #e2e8f0 !important;
+            border-radius: 12px !important;
+            transition: all 0.3s ease !important;
+        }
+        
+        .css-1aq4p6s:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px -5px rgba(15, 52, 96, 0.15) !important;
+        }
+        
+        /* Başlıklar */
+        .css-79elbk, .css-q6jdzk {
+            font-family: 'Playfair Display', serif !important;
+            color: var(--primary-dark) !important;
+        }
+        
+        /* Toolbar */
+        .css-1xdhyk6 {
+            background: #f8fafc !important;
+            border-radius: 8px !important;
+            border: 1px solid #e2e8f0 !important;
+        }
+        
+        /* Drag & Drop Area */
+        .css-1mep7zq {
+            border: 2px dashed var(--primary) !important;
+            border-radius: 12px !important;
+            background: rgba(15, 52, 96, 0.05) !important;
+        }
+        
+        /* Success/Error Messages */
+        .css-195djhf {
+            border-radius: 8px !important;
+        }
+        
+        /* Dark mode için özel ayarlar */
+        @media (prefers-color-scheme: dark) {
+            .css-1s74nv5 {
+                background-color: #1f2937 !important;
+            }
+            
+            .css-1d1r5rk {
+                background-color: #111827 !important;
+            }
+        }
+        
+        /* Loading spinner */
+        .css-1q6at85 {
+            color: var(--primary) !important;
+        }
+        
+        /* Tab navigation */
+        .css-1h0fn8a {
+            border-bottom: 2px solid var(--primary) !important;
+        }
+        
+        /* Preview iframe */
+        .cms-preview-pane iframe {
+            border-radius: 8px !important;
+        }
+        
+        /* File upload progress */
+        .css-1ysr6k0 {
+            background: var(--primary) !important;
+        }
+        
+        /* Collection count badge */
+        .css-1oq9pht {
+            background: var(--primary) !important;
+            color: white !important;
+            border-radius: 12px !important;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        // CMS Konfigürasyonu
+        CMS.init({
+            config: {
+                load_config_file: true,
+                display_url: "https://username.github.io/aylin-dagadasi-website/", // BUNU DEĞİŞTİR
+                logo_url: "https://username.github.io/aylin-dagadasi-website/images/logo.png", // BUNU DEĞİŞTİR
+                site_url: "https://username.github.io/aylin-dagadasi-website/", // BUNU DEĞİŞTİR
+                show_preview_links: true,
+                search: true,
+                slug: {
+                    encoding: "unicode",
+                    clean_accents: true,
+                    sanitize_replacement: "-"
+                }
+            }
+        });
+
+        // Türkçe tarih formatı için
+        const dateFormatter = new Intl.DateTimeFormat('tr-TR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+
+        // Makale önizleme template'i
+        const ArticlePreview = ({ entry, getAsset }) => {
+            const data = entry.getIn(['data']).toJS();
+            const title = data.title || 'Başlık Yok';
+            const content = data.body || 'İçerik yok';
+            const author = data.author || 'Av. Aylin Dağadası Ünal';
+            const category = data.category || 'kategori';
+            const date = data.date ? new Date(data.date).toLocaleDateString('tr-TR') : 'Tarih yok';
+            const image = data.image ? getAsset(data.image) : null;
+            
+            // Kategori adlarını çevir
+            const categoryNames = {
+                'arabuluculuk': 'Arabuluculuk',
+                'aile': 'Aile Hukuku',
+                'ceza': 'Ceza Hukuku',
+                'gayrimenkul': 'Gayrimenkul Hukuku',
+                'icra': 'İcra İflas Hukuku',
+                'is': 'İş ve Sosyal Güvenlik',
+                'kira': 'Kira ve Kat Mülkiyeti',
+                'miras': 'Miras Hukuku',
+                'nufus': 'Nüfus Davaları',
+                'saglik': 'Sağlık Hukuku',
+                'tazminat': 'Tazminat Hukuku',
+                'ticaret': 'Ticaret Hukuku',
+                'tuketici': 'Tüketici Hukuku'
+            };
+            
+            const categoryName = categoryNames[category] || category;
+            
+            return h('div', { 
+                style: { 
+                    fontFamily: 'Poppins, sans-serif',
+                    maxWidth: '800px',
+                    margin: '0 auto',
+                    padding: '20px',
+                    backgroundColor: '#ffffff',
+                    borderRadius: '12px',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                }
+            },
+                // Kapak görseli
+                image ? h('img', {
+                    src: typeof image === 'string' ? image : image.toString(),
+                    style: {
+                        width: '100%',
+                        height: '300px',
+                        objectFit: 'cover',
+                        borderRadius: '8px',
+                        marginBottom: '20px'
+                    }
+                }) : null,
+                
+                // Makale başlığı
+                h('h1', {
+                    style: {
+                        fontFamily: 'Playfair Display, serif',
+                        fontSize: '2rem',
+                        fontWeight: 'bold',
+                        color: '#0f3460',
+                        marginBottom: '16px',
+                        lineHeight: '1.3'
+                    }
+                }, title),
+                
+                // Meta bilgiler
+                h('div', {
+                    style: {
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '16px',
+                        marginBottom: '24px',
+                        fontSize: '0.875rem',
+                        color: '#6b7280',
+                        borderBottom: '1px solid #e5e7eb',
+                        paddingBottom: '16px'
+                    }
+                },
+                    h('span', {
+                        style: {
+                            backgroundColor: '#0f3460',
+                            color: 'white',
+                            padding: '4px 12px',
+                            borderRadius: '16px',
+                            fontSize: '0.75rem',
+                            fontWeight: '500'
+                        }
+                    }, categoryName),
+                    h('span', {}, `📅 ${date}`),
+                    h('span', {}, `👤 ${author}`)
+                ),
+                
+                // İçerik
+                h('div', {
+                    style: {
+                        lineHeight: '1.8',
+                        color: '#374151',
+                        fontSize: '1rem'
+                    },
+                    dangerouslySetInnerHTML: { 
+                        __html: content.replace(/\n/g, '<br>').replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>')
+                    }
+                })
+            );
+        };
+
+        // Preview template'i kaydet
+        CMS.registerPreviewTemplate('articles', ArticlePreview);
+        
+        // Özel widget'lar
+        CMS.registerWidget('number', NumberControl);
+        
+        // Event listener'lar
+        CMS.registerEventListener({
+            name: 'preSave',
+            handler: ({ entry }) => {
+                console.log('Makale kaydediliyor:', entry.get('data').toJS());
+                return entry;
+            }
+        });
+
+        // Başarı mesajları
+        window.addEventListener('load', () => {
+            console.log('🎉 Decap CMS Admin Panel hazır!');
+            console.log('📝 Makale eklemeye başlayabilirsiniz.');
+        });
+    </script>
+</body>
+</html>
