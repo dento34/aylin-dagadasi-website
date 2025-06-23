@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Admin panel'i search engine'lerden gizle
+Disallow: /admin/
+
+Sitemap: https://username.github.io/aylin-dagadasi-website/sitemap.xml
+
+# Hukuk bürosu Av. Aylin Dağadası Ünal
+# Konya Karatay hukuki danışmanlık hizmetleri

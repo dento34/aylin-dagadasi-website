@@ -1,0 +1,101 @@
+backend:
+  name: github
+  repo: username/aylin-dagadasi-website # BUNU DEĞİŞTİR: GitHub kullanıcı adın/repo adı
+  branch: main
+
+# Medya dosyaları
+media_folder: "images/articles"
+public_folder: "/images/articles"
+
+# Site ayarları
+site_url: https://username.github.io/aylin-dagadasi-website/ # BUNU DEĞİŞTİR
+display_url: https://username.github.io/aylin-dagadasi-website/ # BUNU DEĞİŞTİR
+
+# Türkçe dil ayarları
+locale: 'tr'
+
+# Koleksiyonlar
+collections:
+  - name: "articles"
+    label: "📝 Makaleler"
+    label_singular: "📝 Makale"
+    folder: "_articles"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    preview_path: "makaleler.html"
+    sortable_fields: ['date', 'title', 'category']
+    view_filters:
+      - label: "Arabuluculuk"
+        field: category
+        pattern: "arabuluculuk"
+      - label: "Aile Hukuku"
+        field: category
+        pattern: "aile"
+      - label: "Yayında"
+        field: published
+        pattern: true
+    view_groups:
+      - label: "Kategori"
+        field: category
+      - label: "Yıl"
+        field: date
+        pattern: \d{4}
+    fields:
+      - {label: "📝 Makale Başlığı", name: "title", widget: "string", required: true, hint: "SEO için net ve açıklayıcı bir başlık yazın"}
+      - {label: "📅 Yayın Tarihi", name: "date", widget: "datetime", default: "{{now}}", date_format: "DD.MM.YYYY", time_format: "HH:mm", format: "DD MMMM YYYY", required: true}
+      - {label: "👤 Yazar", name: "author", widget: "string", default: "Av. Aylin Dağadası Ünal", required: true}
+      - label: "🏷️ Kategori"
+        name: "category"
+        widget: "select"
+        required: true
+        options:
+          - {label: "🤝 Arabuluculuk", value: "arabuluculuk"}
+          - {label: "👨‍👩‍👧‍👦 Aile Hukuku", value: "aile"}
+          - {label: "⚖️ Ceza Hukuku", value: "ceza"}
+          - {label: "🏠 Gayrimenkul Hukuku", value: "gayrimenkul"}
+          - {label: "💼 İcra İflas Hukuku", value: "icra"}
+          - {label: "👔 İş ve Sosyal Güvenlik", value: "is"}
+          - {label: "🏢 Kira ve Kat Mülkiyeti", value: "kira"}
+          - {label: "🏺 Miras Hukuku", value: "miras"}
+          - {label: "📋 Nüfus Davaları", value: "nufus"}
+          - {label: "🏥 Sağlık Hukuku", value: "saglik"}
+          - {label: "💰 Tazminat Hukuku", value: "tazminat"}
+          - {label: "🏪 Ticaret Hukuku", value: "ticaret"}
+          - {label: "🛒 Tüketici Hukuku", value: "tuketici"}
+      - {label: "🖼️ Kapak Görseli", name: "image", widget: "image", required: false, hint: "Makale için kapak görseli. 800x600px önerilir."}
+      - {label: "📄 Makale Özeti", name: "excerpt", widget: "text", required: false, hint: "Google'da görünecek kısa açıklama (160 karakter önerilir)"}
+      - {label: "📝 Makale İçeriği", name: "body", widget: "markdown", required: true, hint: "Ana makale metnini buraya yazın. Başlıklar için ## ve ### kullanın."}
+      - {label: "🏷️ Etiketler", name: "tags", widget: "list", required: false, hint: "Arama için etiketler (örn: boşanma, nafaka, miras)"}
+      - {label: "✅ Yayında", name: "published", widget: "boolean", default: true, hint: "Kapalıysa taslak olarak kalır"}
+      - {label: "⭐ Öne Çıkan", name: "featured", widget: "boolean", default: false, required: false, hint: "Ana sayfada öne çıkarsın mı?"}
+
+  # Site ayarları koleksiyonu
+  - name: "settings"
+    label: "⚙️ Site Ayarları"
+    files:
+      - label: "📞 İletişim Bilgileri"
+        name: "contact"
+        file: "_data/contact.yml"
+        fields:
+          - {label: "☎️ Telefon", name: "phone", widget: "string", default: "0533 412 31 39"}
+          - {label: "📧 E-posta", name: "email", widget: "string", default: "aylindagadasi@gmail.com"}
+          - {label: "📍 Adres", name: "address", widget: "text", default: "Akabe MAh. Akgöl Sk. Palabıyıklar Plaza 24A- 110 Karatay/KONYA"}
+          - {label: "🕒 Çalışma Saatleri", name: "hours", widget: "string", default: "Pazartesi - Cuma: 08:00 - 18:30"}
+          
+      - label: "🌐 SEO Ayarları"
+        name: "seo"
+        file: "_data/seo.yml"
+        fields:
+          - {label: "🏷️ Site Başlığı", name: "title", widget: "string", default: "Av. Aylin Dağadası Ünal Hukuk & Danışmanlık"}
+          - {label: "📝 Site Açıklaması", name: "description", widget: "text", default: "Konya Karatay'da hukuki danışmanlık hizmetleri"}
+          - {label: "🔑 Anahtar Kelimeler", name: "keywords", widget: "string", default: "konya avukat, karatay avukat, hukuk bürosu"}
+
+# Editör ayarları
+editor:
+  preview: true
+
+# Yayın onay süreci (isteğe bağlı)
+# publish_mode: editorial_workflow
+
+# Türkçe çeviriler
+display_url: https://username.github.io/aylin-dagadasi-website/ # BUNU DEĞİŞTİR
